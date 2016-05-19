@@ -5,11 +5,15 @@ using namespace std;
 bool accept = false;
 void determineState(int column ,int state,string chart[16][11])
 {
-	cout << chart[state][column] << endl;
+	string hold;
+		hold = chart[state][column];
 }
 void nonTerminal(string receive)
 {
-
+	switch (receive)
+	{
+		case""
+	}
 }
 void shift(string receive)
 {
@@ -56,12 +60,12 @@ int main()
 	cout << "Enter input string terminating with $:";
 	cin >> input;
 	length = input.length();
-	//while (input[position]!='$')
-	//{
+	while (input[position]!='$')
+	{
 		parseColumn(input[position],column);
 		determineState(column, position, chart);
 		position++;
-	//}
+	}
 	//cout << column<< endl;
 	system("pause");
 	return 0;
