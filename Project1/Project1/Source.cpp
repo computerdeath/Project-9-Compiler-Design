@@ -2,13 +2,42 @@
 #include <string>
 #include <stack>
 using namespace std;
-stack<string>hold;
-int determineState(string chart[16][11], string receive,int receivedState)
+bool accept = false;
+void determineState(int column ,int state,string chart[16][11])
 {
-	int newState=0;
-	 
+	cout << chart[state][column] << endl;
+}
+void nonTerminal(string receive)
+{
 
-	return newState;
+}
+void shift(string receive)
+{
+
+}
+void parseColumn(char input,int &column)
+{
+	switch (input)
+	{
+	case 'i':column = 0; break;
+	case'+':column = 1; break;
+	case'-':column = 2; break;
+	case'*':column = 3; break;
+	case'/':column = 4; break;
+	case'(':column = 5; break;
+	case')':column = 6; break;
+	case'$':column = 7; break;
+	case'E':column = 8; break;//E
+	case'T':column = 9; break;//F
+	case'F':column = 10; break;//
+	}
+
+	//return newState;
+}
+void displayStack(string stack,string hold, string entry)
+{
+	cout << "Stack	Input	Entry";
+
 }
 int main()
 {
@@ -20,18 +49,20 @@ int main()
 	{"~","r1","r1","s8","s9","~","r1","r1","~","~","~"},{ "~","r2","r2","s8","s9","~","r2","r2","~","~","~" },{ "~","r4","r4","r4","r4","~","r4","r4","~","~","~" },{ "~","r5","r5","r5","r5","~","r5","r5","~","~","~" },
 	{ "~","r7","r7","r7","r7","~","r7","r7","~","~","~" }
 	};
-	string input;
-	int state = 0, column, position = 0;
-	
-	string a = "a";
+	string input,stack;
+	int state = 0, column,length, position = 0;
 	//intialize stack
-	hold.push("0");
+	stack = "0";
 	cout << "Enter input string terminating with $:";
 	cin >> input;
-	cout << hold.top();
-	//determineState(chart, a,state);
-
-
+	length = input.length();
+	//while (input[position]!='$')
+	//{
+		parseColumn(input[position],column);
+		determineState(column, position, chart);
+		position++;
+	//}
+	//cout << column<< endl;
 	system("pause");
 	return 0;
 }
