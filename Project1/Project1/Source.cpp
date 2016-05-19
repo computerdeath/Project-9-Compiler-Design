@@ -1,7 +1,15 @@
 #include <iostream>
 #include <string>
+#include <stack>
 using namespace std;
+stack<string>hold;
+int determineState(string chart[16][11], string receive,int receivedState)
+{
+	int newState=0;
+	 
 
+	return newState;
+}
 int main()
 {
 	// ll parsers for left to right
@@ -13,7 +21,17 @@ int main()
 	{ "~","r7","r7","r7","r7","~","r7","r7","~","~","~" }
 	};
 	string input;
-	int state, column;
+	int state = 0, column, position = 0;
+	
+	string a = "a";
+	//intialize stack
+	hold.push("0");
 	cout << "Enter input string terminating with $:";
 	cin >> input;
+	cout << hold.top();
+	//determineState(chart, a,state);
+
+
+	system("pause");
+	return 0;
 }
