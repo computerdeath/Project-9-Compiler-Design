@@ -2,10 +2,50 @@
 #include <string>
 #include <stack>
 #include <sstream>
+#include <iomanip>
 using namespace std;
-bool accept = false; int state = 0; stack<string>stringStack;string input;
+bool accept = false; int state = 0,column; stack<string>stringStack;string input;
+string chart[16][11] = { { "s5","~","~","~","~","s4","~","~","1","2","3" },{ "~","s6","s7","~","~","~","~","acc","~","~","~" },{ "~","r3","r3","s8","s9","~","r3","r3","~","~","~" },
+{ "~","r6","r6","r6","r6","~","r6","r6","~","~","~" },{ "s5","~","~","~","s4","~","~","10","2","3" },{ "~","r8","r8","r8","r8","~","r8","~","~","~" },{ "s5","~","~","~","~","s4","~","~","~","11","3" },
+{ "s5","~","~","~","~","s4","~","~","~","12","3" },{ "s5","~","~","~","~","s4","~","~","~","~","13" },{ "s5","~","~","~","~","s4","~","~","~","~","14" },{ "~","s6","s7","~","~","~","s15","~","~","~","~" },
+{ "~","r1","r1","s8","s9","~","r1","r1","~","~","~" },{ "~","r2","r2","s8","s9","~","r2","r2","~","~","~" },{ "~","r4","r4","r4","r4","~","r4","r4","~","~","~" },{ "~","r5","r5","r5","r5","~","r5","r5","~","~","~" },
+{ "~","r7","r7","r7","r7","~","r7","r7","~","~","~" }
+};
+void shift(string receive)
+{
+	stringstream ss; string temp;
+	char hold = input[0];
+	ss << hold;
+	ss >> temp;
+	stringStack.push(temp);
+	//delete first element of input string after moving into stack
+	input.erase(0);
+	stringStack.push(receive);
+}
+void shiftTerminal(string receive)
+{
+	stringStack.pop();
+	stringStack.push(receive);
+	stringStack.push(chart[state][column]);
+}
 void displayF()
 {
+	stack<string> TempStack;
+
+	while (!stringStack.empty())
+	{
+		TempStack.push(stringStack.top());
+		stringStack.pop();
+	}
+	while (!TempStack.empty())
+	{
+		cout << TempStack.top();
+		stringStack.push(TempStack.top());
+		TempStack.pop();
+	}
+	int length = stringStack.size();
+	for (int n = length; n <= 20; n++)cout << ' ';
+	cout << setw(10) << left << input;
 
 }
 void popStack()
@@ -20,24 +60,13 @@ void checkStack()
 }
 void nonTerminal(string receive)
 {
-	
+	if (receive == "r8")
+		shiftTerminal("F");
+	if (receive == "r6")
+		shiftTerminal("T");
 }
-void shift(string receive)
-{
-	stringstream ss; string ass;
-	char hold = input[0];
-	ss << hold;
-	ss >> ass;
-	stringStack.push(ass);
-	//delete first element of input string
-	input.erase(0);
-	stringStack.push(receive);
-}
-void shiftTerminal()
-{
 
-}
-void determineState(int column ,int state,string chart[16][11])
+void determineState()
 {
 	string hold;
 		hold = chart[state][column];
@@ -71,8 +100,9 @@ void determineState(int column ,int state,string chart[16][11])
 			nonTerminal("r7");
 		if (hold == "r8")
 			nonTerminal("r8");
+		displayF();
 }
-void parseColumn(char input,int &column)
+void parseColumn(char input)
 {
 	switch (input)
 	{
@@ -100,13 +130,9 @@ int main()
 {
 	// ll parsers for left to right
 	//~ is blank
-	string chart[16][11] = { {"s5","~","~","~","~","s4","~","~","1","2","3" },{"~","s6","s7","~","~","~","~","acc","~","~","~"},{"~","r3","r3","s8","s9","~","r3","r3","~","~","~"},
-	{"~","r6","r6","r6","r6","~","r6","r6","~","~","~"},{"s5","~","~","~","s4","~","~","10","2","3"},{"~","r8","r8","r8","r8","~","r8","~","~","~" },{"s5","~","~","~","~","s4","~","~","~","11","3"},
-	{ "s5","~","~","~","~","s4","~","~","~","12","3" },{ "s5","~","~","~","~","s4","~","~","~","~","13" },{ "s5","~","~","~","~","s4","~","~","~","~","14" },{"~","s6","s7","~","~","~","s15","~","~","~","~"},
-	{"~","r1","r1","s8","s9","~","r1","r1","~","~","~"},{ "~","r2","r2","s8","s9","~","r2","r2","~","~","~" },{ "~","r4","r4","r4","r4","~","r4","r4","~","~","~" },{ "~","r5","r5","r5","r5","~","r5","r5","~","~","~" },
-	{ "~","r7","r7","r7","r7","~","r7","r7","~","~","~" }
-	};
-	int column,length, position = 0;
+	
+	int position = 0;
+	column = 0;
 	//intialize stack
 	stringStack.push("0");
 	cout << stringStack.top();
@@ -115,8 +141,8 @@ int main()
 	//length = input.length();
 	while (input[position]!='$')
 	{
-		parseColumn(input[position],column);
-		determineState(column, position, chart);
+		parseColumn(input[position]);
+		determineState();
 		position++;
 	}
 	//cout << column<< endl;
