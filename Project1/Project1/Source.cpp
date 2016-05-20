@@ -2,18 +2,20 @@
 #include <string>
 #include <stack>
 using namespace std;
-bool accept = false;
+bool accept = false; int state = 0; stack<string>stringStack;
 void determineState(int column ,int state,string chart[16][11])
 {
 	string hold;
 		hold = chart[state][column];
+		if (hold == "s5")
+			shift("5");
+		if (hold == "s4")
+			shift("4");
+		//if (hold==)
 }
 void nonTerminal(string receive)
 {
-	switch (receive)
-	{
-		case""
-	}
+	
 }
 void shift(string receive)
 {
@@ -31,9 +33,9 @@ void parseColumn(char input,int &column)
 	case'(':column = 5; break;
 	case')':column = 6; break;
 	case'$':column = 7; break;
-	case'E':column = 8; break;//E
-	case'T':column = 9; break;//F
-	case'F':column = 10; break;//
+	//case'E':column = 8; break;//E
+	//case'T':column = 9; break;//F
+	//case'F':column = 10; break;//
 	}
 
 	//return newState;
@@ -54,12 +56,13 @@ int main()
 	{ "~","r7","r7","r7","r7","~","r7","r7","~","~","~" }
 	};
 	string input,stack;
-	int state = 0, column,length, position = 0;
+	int column,length, position = 0;
 	//intialize stack
-	stack = "0";
+	stringStack.push("0");
+	cout << stringStack.top();
 	cout << "Enter input string terminating with $:";
 	cin >> input;
-	length = input.length();
+	//length = input.length();
 	while (input[position]!='$')
 	{
 		parseColumn(input[position],column);
