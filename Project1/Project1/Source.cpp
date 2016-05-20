@@ -1,8 +1,42 @@
 #include <iostream>
 #include <string>
 #include <stack>
+#include <sstream>
 using namespace std;
-bool accept = false; int state = 0; stack<string>stringStack;
+bool accept = false; int state = 0; stack<string>stringStack;string input;
+void displayF()
+{
+
+}
+void popStack()
+{
+	string hold;
+	hold = stringStack.top();
+}
+void checkStack()
+{
+	string check;
+	check = stringStack.top();
+}
+void nonTerminal(string receive)
+{
+	
+}
+void shift(string receive)
+{
+	stringstream ss; string ass;
+	char hold = input[0];
+	ss << hold;
+	ss >> ass;
+	stringStack.push(ass);
+	//delete first element of input string
+	input.erase(0);
+	stringStack.push(receive);
+}
+void shiftTerminal()
+{
+
+}
 void determineState(int column ,int state,string chart[16][11])
 {
 	string hold;
@@ -11,15 +45,32 @@ void determineState(int column ,int state,string chart[16][11])
 			shift("5");
 		if (hold == "s4")
 			shift("4");
-		//if (hold==)
-}
-void nonTerminal(string receive)
-{
-	
-}
-void shift(string receive)
-{
-
+		if (hold == "s6")
+			shift("6");
+		if (hold == "s7")
+			shift("6");
+		if (hold == "s8")
+			shift("6");
+		if (hold == "s9")
+			shift("9");
+		if (hold == "s15")
+			shift("15");
+		if (hold == "r1")
+			nonTerminal("r1");
+		if (hold == "r2")
+			nonTerminal("r2");
+		if (hold == "r3")
+			nonTerminal("r3");
+		if (hold == "r4")
+			nonTerminal("r4");
+		if(hold=="r5")
+			nonTerminal("r5");
+		if (hold == "r6")
+			nonTerminal("r6");
+		if (hold == "r7")
+			nonTerminal("r7");
+		if (hold == "r8")
+			nonTerminal("r8");
 }
 void parseColumn(char input,int &column)
 {
@@ -55,7 +106,6 @@ int main()
 	{"~","r1","r1","s8","s9","~","r1","r1","~","~","~"},{ "~","r2","r2","s8","s9","~","r2","r2","~","~","~" },{ "~","r4","r4","r4","r4","~","r4","r4","~","~","~" },{ "~","r5","r5","r5","r5","~","r5","r5","~","~","~" },
 	{ "~","r7","r7","r7","r7","~","r7","r7","~","~","~" }
 	};
-	string input,stack;
 	int column,length, position = 0;
 	//intialize stack
 	stringStack.push("0");
